@@ -12,6 +12,14 @@ Write one bullet per change, in one to three sentences: what changed for a user,
      files its entry here; without it the entry lands inside the released
      section below, with no merge conflict to catch it. -->
 
+### Fixed
+
+- **The bench workflows release their own box lock again.** `tools/bench_release_lock.sh`
+  asked `lager hello` who held the lock, and `hello` says nothing about a lock held under the
+  caller's own CI identity, so the cleanup step of the run that took the lock reported "No box
+  lock held" and left it. Every green Nightly left the bench box locked until the next run. The
+  probe now asks under a separate holder, so it sees the run's own lock and releases it.
+
 ## [0.55.1] - 2026-10-12
 
 ### Removed
